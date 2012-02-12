@@ -8,7 +8,7 @@ file.
 Usage
 =====
 
-`ssh-find-id [*PATTERNS*] [*OPTIONS*] [--] [*USER*@]*MACHINE* ...`
+<code>ssh-find-id [<em>PATTERNS</em>] [<em>OPTIONS</em>] [--] [<em>USER</em>@]<em>MACHINE</em> ...</code>
 
 If no *PATTERNS* are speified, by default `ssh-find-id` will search for the
 keys represented by the SSH agent and the keys in ~/.ssh.identity.pub,
