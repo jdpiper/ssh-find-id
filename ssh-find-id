@@ -1,0 +1,158 @@
+#! /usr/bin/env bash
+
+CMD=$(basename "$0")
+
+read -d '' USAGE <<EOF
+Usage: $CMD [PATTERNS] [OPTIONS] [--] [USER@]MACHINE ...
+                                                                               
+Search for keys that match one of the PATTERNS in the authorized_keys file for
+USER on each MACHINE. If no PATTERNS are specified, search for the keys
+represented by the SSH agent and the keys in ~/.ssh/identity.pub,
+~/.ssh/id_rsa.pub and ~/.id_dsa.pub.
+                                                                               
+Patterns:
+       -L           Search for all public keys represented by the SSH agent.
+       -i FILE      Search for the public key in FILE. The -i argument can be
+                    provided multiple times to search for multiple keys.
+       -e PATTERN   Search for public keys that match the regular expression
+                    PATTERN. The -e argument can be provided multiple times to
+                    search for multiple keys.
+                                                                               
+Options:
+       -o OPTION    Specify additional SSH options. See ssh_config(5) for the
+                    options and their possible values. The -o argument can be
+                    provied multiple times.
+       --color WHEN Colorize output. WHEN may be never, always or auto. Defaults
+                    to auto.
+       --           Treat all remaining arguments as host names.
+       --help       Display this usage message.
+EOF
+
+set -e
+
+readkey() {
+    if [[ -f $1 ]]; then
+        KEYS+=($(cat "$1"))
+    fi
+}
+
+agentkey() {
+    KEYS+=($(ssh-add -L))
+}
+
+declare -a SSHOPTS
+declare -a PATTERNS
+declare -a KEYS
+declare -a HOSTS
+declare -a MATCHES
+
+MESSAGE=
+ACTION=search
+COLOR=auto
+IFS=$'\n'
+
+while [[ -n $1 ]]; do
+    case "$1" in
+        -L)
+            agentkey
+            ;;
+        -i)
+            shift
+            readkey "$1"
+            ;;
+        -e)
+            shift
+            PATTERNS+=("$1")
+            ;;
+        -o)
+            shift
+            SSHOPTS+=(-o "$1")
+            ;;
+        --color)
+            shift
+            COLOR="$1"
+            ;;
+        --)
+            shift
+            break
+            ;;
+        --help)
+            ACTION=usage
+            break
+            ;;
+        -*)
+            MESSAGE="Unknown option: $1"
+            break
+            ;;
+        *)
+            HOSTS+=("$1")
+            ;;
+    esac
+    shift
+done
+
+if [[ $COLOR == auto ]]; then
+    COLOR=never
+    [[ -t 1 ]] && COLOR=always
+fi
+
+case "$COLOR" in
+    always)
+        HOST_COLOR=$'\033[1;33m'
+        NO_COLOR=$'\033[0m'
+        ;;
+    *)
+        HOST_COLOR=
+        NO_COLOR=
+        ;;
+esac
+
+if [[ $ACTION != usage ]]; then
+    while [[ -n $1 ]]; do
+        HOSTS+=("$1")
+        shift
+    done
+
+    if [[ ${#PATTERNS[*]} == 0 && ${#KEYS[*]} == 0 ]]; then
+        agentkey
+        readkey ~/.ssh/identity.pub
+        readkey ~/.ssh/id_rsa.pub
+        readkey ~/.ssh/id_dsa.pub
+    fi
+
+    if [[ ${#PATTERNS[*]} == 0 && ${#KEYS[*]} == 0 ]]; then
+        MESSAGE="No patterns specified"
+    elif [[ ${#HOSTS[*]} == 0 ]]; then
+        MESSAGE="No hosts specified"
+    fi
+fi
+
+if [[ -n $MESSAGE ]]; then
+    ACTION=usage
+fi
+
+case $ACTION in
+    usage)
+        [[ -n $MESSAGE ]] && echo "$MESSAGE"
+        echo "$USAGE"
+        [[ -n $MESSAGE ]] && exit 1
+        ;;
+    search)
+        for HOST in "${HOSTS[@]}"; do
+            MATCHES=()
+
+            [[ ${#PATTERNS[*]} != 0 ]] && MATCHES+=($(
+                ssh "${SSHOPTS[@]}" "$HOST" grep --color=$COLOR -f - \
+                    '~/.ssh/authorized_keys' <<<"${PATTERNS[*]}"
+            )) || true
+            [[ ${#KEYS[*]} != 0 ]] && MATCHES+=($(
+                ssh "${SSHOPTS[@]}" "$HOST" grep --color=$COLOR -Ff - \
+                    '~/.ssh/authorized_keys' <<<"${KEYS[*]}"
+            )) || true
+
+            for MATCH in "${MATCHES[@]}"; do
+                echo "$HOST_COLOR$HOST$NO_COLOR:$MATCH"
+            done
+        done
+        ;;
+esac
