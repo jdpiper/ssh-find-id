@@ -16,46 +16,39 @@ keys represented by the SSH agent and the keys in ~/.ssh.identity.pub,
 
 Patterns
 --------
-<table>
-<tr><th><code>-L</code></th>
-    <td>Search for all public keys represented by the SSH agent.</td>
-</tr>
-<tr><th><code>-i</code> <em>FILE</em></th>
-    <td>Search for the public key in <em>FILE</em>. The <code>-i</code>
-        argument can be provided multiple times to search for multiple keys.
-    </td>
-</tr>
-<tr><th><code>-e</code> <em>PATTERN</em></th>
-    <td>Search for public keys that match the regular expression
-        <em>PATTERN</em>. The <code>-e</code> argument can be provided multiple
-        times to search for multiple keys.
-    </td>
-</tr>
-</table>
+<dl>
+<dt><code>-L</code></dt>
+<dd>Search for all public keys represented by the SSH agent.</dd>
+<dt><code>-i</code> <em>FILE</em></dt>
+<dd>Search for the public key in <em>FILE</em>. The <code>-i</code>
+    argument can be provided multiple times to search for multiple keys.
+</dd>
+<dt><code>-e</code> <em>PATTERN</em></dt>
+<dd>Search for public keys that match the regular expression
+    <em>PATTERN</em>. The <code>-e</code> argument can be provided multiple
+    times to search for multiple keys.
+</dd>
+</dl>
 
 Options
 -------
-<table>
-<tr><th><code>-o</code> <em>OPTION</em></th>
-    <td>Specify additional SSH options. See
-        <a href="http://linux.die.net/man/5/ssh_config">ssh_config(5)</a> for
-        the options and their possible values. The <code>-o</code> argument can
-        be provided multiple times.
-    </td>
-</tr>
-<tr><th><code>--color</code> <em>WHEN</em></th>
-    <td>Colorize output. <em>WHEN</em> may be <code>never</code>,
-        <code>always</code> or <code>auto</code>, and defaults to
-        <code>auto</code>.
-    </td>
-</tr>
-<tr><th><code>--</code></th>
-    <td>Treat all remaining arguments as host names.</td>
-</tr>
-<tr><th><code>--help</code></th>
-    <td>Display a usage message.</td>
-</tr>
-</table>
+<dl>
+<dt><code>-o</code> <em>OPTION</em></dt>
+<dd>Specify additional SSH options. See
+    <a href="http://linux.die.net/man/5/ssh_config">ssh_config(5)</a> for
+    the options and their possible values. The <code>-o</code> argument can
+    be provided multiple times.
+</dd>
+<dt><code>--color</code> <em>WHEN</em></dt>
+<dd>Colorize output. <em>WHEN</em> may be <code>never</code>,
+    <code>always</code> or <code>auto</code>, and defaults to
+    <code>auto</code>.
+</dd>
+<dt><code>--</code></dt>
+<dd>Treat all remaining arguments as host names.</dd>
+<dt><code>--help</code></dt>
+<dd>Display a usage message.</dd>
+</dl>
 
 Examples
 ========
