@@ -42,7 +42,7 @@ Options
 <dt><code>--color <em>WHEN</em></code></dt>
 <dd>Colorize output. <em>WHEN</em> may be <code>never</code>,
     <code>always</code> or <code>auto</code>, and defaults to
-    <code>auto</code>.
+    <code>auto</code>, which colorizes output if STDOUT is a pty.
 </dd>
 <dt><code>--</code></dt>
 <dd>Treat all remaining arguments as host names.</dd>
