@@ -56,36 +56,36 @@ Examples
 Check example.com:~/.ssh/authorized\_keys for the keys represented by the SSH
 agent and in ~/.ssh/identity.pub, ~/.ssh/id\_rsa.pub and ~/.ssh/id\_dsa.pub.
 
-<pre><code>
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$ ssh-find-id example.com
-<span style="color:#DDAA00">example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$
-</code></pre>
+```console
+user@laptop:~$ ssh-find-id example.com
+example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+user@laptop:~$
+```
 
 Check example.com for keys that contain `@laptop` or `@desktop`.
 
-<pre><code>
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$ ssh-find-id -e @laptop -e @desktop example.com
-<span style="color:#DDAA00">example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$
-</code></pre>
+```console
+user@laptop:~$ ssh-find-id -e @laptop -e @desktop example.com
+example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+user@laptop:~$
+```
 
 Use bash's brace expansion to search for keys for user and root at
 www.example.com and its four backup servers, and use only public key
 authentication so you aren't prompted for a password for servers that don't
 have your public key.
 
-<pre><code>
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$ ssh-find-id -e @laptop -o PreferredAuthentications=publickey {root@,}www{,{2..5}}.example.com
-<span style="color:#DDAA00">root@www.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#DDAA00">root@www2.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
+```console
+user@laptop:~$ ssh-find-id -e @laptop -o PreferredAuthentications=publickey {root@,}www{,{2..5}}.example.com
+root@www.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+root@www2.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
 Permission denied (publickey,gssapi-with-mic,password).
 Permission denied (publickey,gssapi-with-mic,password).
 Permission denied (publickey,gssapi-with-mic,password).
-<span style="color:#DDAA00">www.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#DDAA00">www2.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#DDAA00">www3.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
-<span style="color:#DDAA00">www4.example.com</span>:<span style="color:#DD0000">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com</span>
+www.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+www2.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+www3.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
+www4.example.com:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35pzENEY8dhsFTnl0t4pyXsokhQArdYa1eZ5BBA97f6pt/X4wo/Hgcsf0GAtFUgwRcNxy5Ca7zpDkVacSr3y4vIYgZt8bdv1mSHDQSmBqy/cMNk8042hzusq5EL71GMRS+H6ZW/Lv40JXSH0Ah3nrL2CuvFZVmn9bSw28ZiQKaDizLGzw0lotV2xKE0Bw8hB9m8MfiRalSn1xlwbtwUz5HcW+1K3kaLpjXbhNQk+gHaAtF8YVilXEnNmUqiUqXubUGZfDK47QU35HEVKs5lkm86d2dw4wKHejHZO+aa/7bUxFt/0/OurEt4LsrMTmhwwlrSmp9vaXhG7S8EMIaKil user@example.com
 Permission denied (publickey,gssapi-with-mic,password).
-<span style="color:#00DD00">user@laptop</span>:<span style="color:#0000DD">~</span>$
-</code></pre>
+user@laptop:~$
+```
