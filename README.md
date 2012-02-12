@@ -20,13 +20,13 @@ Patterns
 <dt><code>-L</code></dt>
 <dd>Search for all public keys represented by the SSH agent.</dd>
 <dt><code>-i <em>FILE</em></code></dt>
-<dd>Search for the public key in <em>FILE</em>. The <code>-i</code>
-    argument can be provided multiple times to search for multiple keys.
+<dd>Search for the public key in <em>FILE</em>. The <code>-i</code> argument
+    can be provided multiple times to search for multiple keys.
 </dd>
 <dt><code>-e <em>PATTERN</em></code></dt>
-<dd>Search for public keys that match the regular expression
-    <em>PATTERN</em>. The <code>-e</code> argument can be provided multiple
-    times to search for multiple keys.
+<dd>Search for public keys that match the regular expression <em>PATTERN</em>.
+    The <code>-e</code> argument can be provided multiple times to search for
+    multiple keys.
 </dd>
 </dl>
 
@@ -35,9 +35,9 @@ Options
 <dl>
 <dt><code>-o <em>OPTION</em></code></dt>
 <dd>Specify additional SSH options. See
-    <a href="http://linux.die.net/man/5/ssh_config">ssh_config(5)</a> for
-    the options and their possible values. The <code>-o</code> argument can
-    be provided multiple times.
+    <a href="http://linux.die.net/man/5/ssh_config">ssh_config(5)</a> for the
+    options and their possible values. The <code>-o</code> argument can be
+    provided multiple times.
 </dd>
 <dt><code>--color <em>WHEN</em></code></dt>
 <dd>Colorize output. <em>WHEN</em> may be <code>never</code>,
